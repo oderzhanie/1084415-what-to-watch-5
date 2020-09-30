@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Irina Sadovskaya](https://up.htmlacademy.ru/react/5/user/1084415).
-* Наставник: `Неизвестно`.
+* Наставник: [Svetlana Blinova](https://htmlacademy.ru/profile/id1432187).
 
 ---
 
