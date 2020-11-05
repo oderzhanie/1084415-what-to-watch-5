@@ -1,7 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {MoviesList} from "../movies-list";
-import films from "./mocks/films";
+import MoviesList from "../movies-list";
 
 class Main extends PureComponent {
   constructor(props) {
@@ -9,6 +8,8 @@ class Main extends PureComponent {
   }
 
   render() {
+    const {films} = this.props;
+
     return (
       <React.Fragment>
         <section className="movie-card">
@@ -104,7 +105,7 @@ class Main extends PureComponent {
             </ul>
 
             <div className="catalog__movies-list">
-              <MoviesList films={films}/>
+              {<MoviesList films={films}/>}
             </div>
 
             <div className="catalog__more">
@@ -132,23 +133,7 @@ class Main extends PureComponent {
 }
 
 Main.propTypes = {
-  film: PropTypes.shape({
-    movieId: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    movieRating: PropTypes.number.isRequired,
-    movieRatingVerbal: PropTypes.string.isRequired,
-    movieShortDescription: PropTypes.string.isRequired,
-    movieGenre: PropTypes.string.isRequired,
-    movieRuntime: PropTypes.number.isRequired,
-    movieReviews: PropTypes.array.isRequired,
-    movieDirector: PropTypes.string.isRequired,
-    movieActors: PropTypes.array.isRequired,
-    movieReleaseDate: PropTypes.number.isRequired,
-    movieFullDescription: PropTypes.string.isRequired,
-    movieVideo: PropTypes.string.isRequired,
-    isMyList: PropTypes.bool.isRequired
-  }).isRequired
+  films: PropTypes.array.isRequired,
 };
 
 export default Main;

@@ -1,5 +1,5 @@
 import {getRandomInteger, getRandomElem, getRandomName, getBoolean, generateId, getRandomDescription} from "../utils/utils.js";
-import {TEXT, GENRES, TITLES, POSTERS, FILMS_START_YEAR, FILMS_START_HOUR, FILMS_END_HOUR, FILMS_END_YEAR, ELEMENTS_MIN, ELEMENTS_MAX, START_MONTH, END_MONTH, START_DATE, END_DATE, START_MINUTES, END_MINUTES, RATING_MIN, RATING_MAX} from "../utils/films.js";
+import {TEXT, GENRES, TITLES, POSTERS, FILMS_START_YEAR, FILMS_END_YEAR, ELEMENTS_MIN, ELEMENTS_MAX, START_MONTH, END_MONTH, START_DATE, END_DATE, START_MINUTES, END_MINUTES, RATING_MIN, RATING_MAX} from "../utils/films.js";
 import {getReviewsArray} from "../mocks/reviews.js";
 
 const FILMS_NUMBER = 8;
@@ -28,7 +28,6 @@ export const generateFilm = () => {
   filmDate.setDate(getRandomInteger(START_DATE, END_DATE));
   filmDate.setMonth(getRandomInteger(START_MONTH, END_MONTH));
   filmDate.setUTCFullYear(getRandomInteger(FILMS_START_YEAR, FILMS_END_YEAR));
-  filmDate.setHours(getRandomInteger(FILMS_START_HOUR, FILMS_END_HOUR));
   filmDate.setMinutes(getRandomInteger(START_MINUTES, END_MINUTES));
 
   const movieId = generateId();
@@ -38,25 +37,31 @@ export const generateFilm = () => {
   return {
     movieId,
     movieName: filmTitle,
-    movieposter: filmPoster,
+    moviePosterImg: filmPoster,
+    moviePreviewImg: filmPoster,
+    movieBgImg: filmPoster,
+    movieBgColor: `#ffffff`,
     movieRating,
     movieRatingVerbal,
-    movieshortDescription: getRandomDescription(TEXT),
+    movieScoresCount: getRandomInteger(START_MINUTES, END_MINUTES),
     movieGenre: getRandomElem(GENRES),
-    movieruntime: getRandomInteger(START_MINUTES, END_MINUTES),
+    movieRuntime: getRandomInteger(START_MINUTES, END_MINUTES),
     movieReviews: getReviewsArray(movieId),
     movieDirector: getRandomName(),
     movieActors: getRandomElements(),
     movieReleaseDate: filmDate.getFullYear(),
-    movieFullDescription: description,
-    movieVideo: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    movieFullDescription: getRandomDescription(TEXT),
+    movieVideoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    moviePreviewLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     isMyList: getBoolean()
   };
 };
 
-export const films = [];
+const films = [];
 
 for (let i = 0; i < FILMS_NUMBER; i++) {
   const film = generateFilm();
   films.push(film);
 }
+
+export default films;
