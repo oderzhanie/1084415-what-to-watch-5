@@ -14,29 +14,48 @@ const App = (props) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <Main
-            films={films}
-          />
+        <Route exact
+          path="/"
+          render={({history}) => (
+            <Main
+              films={films}
+              onPlayButtonClick={() => history.push(`/player/:id`)}
+            />
+          )}>
         </Route>
+
         <Route exact path="/login">
           <SignIn />
         </Route>
+
         <Route exact path="/mylist">
-          <MyList />
-        </Route>
-        <Route exact path="/films/:id/review">
-          <AddReview />
-        </Route>
-        <Route exact path="/films/:id">
-          <MoviePage
+          <MyList
             films={films}
-            film={films[0]}
           />
         </Route>
+
+        <Route exact path="/films/:id/review">
+          <AddReview
+            film={films[5]}
+          />
+        </Route>
+
+        <Route exact
+          path="/films/:id"
+          render={({history}) => (
+            <MoviePage
+              film={films[1]}
+              films={films}
+              onPlayButtonClick={() => history.push(`/player/:id`)}
+            />
+          )}
+        >
+
+        </Route>
+
         <Route exact path="/player/:id">
           <Player
-            film={films[0]}
+            film={films[3]}
           />
         </Route>
       </Switch>
@@ -45,7 +64,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  films: PropTypes.array.isRequired
+  films: PropTypes.array.isRequired,
 };
 
 export default App;

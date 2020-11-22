@@ -1,35 +1,32 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-// import {Redirect} from "react-router-dom";
-import SmallMovieCard from "../small-movie-card";
+import SmallMovieCard from "../small-movie-card/small-movie-card";
 
 class MoviesList extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeCardId: null
+      activeCardId: ``
     };
 
-    this.onCardHover = this.onCardHover.bind(this);
+    this.handleCardHover = this.handleCardHover.bind(this);
   }
 
-  onCardHover(id) {
-    this.setState({
-      activeCardId: id
-    });
+  handleCardHover() {
+    // Должен потом менять стейт
   }
 
   render() {
-    const {films} = this.props;
+    const {filmsList} = this.props;
 
     return (
       <div className="catalog__movies-list">
-        {films.map((film) => (
+        {filmsList.map((film, i) => (
           <SmallMovieCard
-            film = {film}
-            onMouseOver = {this.onCardHover(film.movieId)}
+            film = {filmsList[i]}
             key = {film.movieId}
+            onMouseOver = {this.handleCardHover}
           />
         ))}
       </div>
@@ -38,7 +35,7 @@ class MoviesList extends PureComponent {
 }
 
 MoviesList.propTypes = {
-  films: PropTypes.array.isRequired
+  filmsList: PropTypes.array.isRequired,
 };
 
 export default MoviesList;

@@ -1,51 +1,33 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {FILM_SHAPE} from "../../utils/constants.js";
-// import SmallMovieCard from "../small-movie-card";
+import {FILM_SHAPE, FILMS_LIST_LENGTH} from "../../utils/constants.js";
+import {getRandomInteger} from "../../utils/utils.js";
+import MoviesList from "../movies-list/movies-list";
+import {Link} from "react-router-dom";
 
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      activeCardId: null
-    };
-
-    this.onCardHover = this.onCardHover.bind(this);
-  }
-
-  onCardHover(id) {
-    this.setState({
-      activeCardId: id
-    });
   }
 
   render() {
-    const {films} = this.props;
-    const similarFilms = films.slice(0, 3); // Заменить на константы
+    const {film, films, onPlayButtonClick} = this.props;
+    const similarFilmsNumber = getRandomInteger(1, FILMS_LIST_LENGTH);
+    const similarFilms = films.slice(0, similarFilmsNumber);
 
-    const {film} = this.props;
     const {
-      movieId,
       movieName,
       moviePosterImg,
-      moviePreviewImg,
-      movieBgImg,
-      movieBgColor,
       movieRating,
       movieRatingVerbal,
       movieScoresCount,
-      movieShortDescription,
       movieGenre,
-      movieRuntime,
-      movieReviews,
+      // movieReviews,
       movieDirector,
       movieActors,
       movieReleaseDate,
       movieFullDescription,
-      movieVideoLink,
-      moviePreviewLink,
-      isMyList
+      // isMyList
     } = film;
 
     return (
@@ -60,11 +42,11 @@ class MoviePage extends PureComponent {
 
             <header className="page-header movie-card__head">
               <div className="logo">
-                <a href="main.html" className="logo__link">
+                <Link to={{pathname: `/`}} className="logo__link">
                   <span className="logo__letter logo__letter--1">W</span>
                   <span className="logo__letter logo__letter--2">T</span>
                   <span className="logo__letter logo__letter--3">W</span>
-                </a>
+                </Link>
               </div>
 
               <div className="user-block">
@@ -83,7 +65,11 @@ class MoviePage extends PureComponent {
                 </p>
 
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button">
+                  <button onClick={(evt) => {
+                    evt.preventDefault();
+                    onPlayButtonClick();
+                  }}
+                  className="btn btn--play movie-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -95,7 +81,7 @@ class MoviePage extends PureComponent {
                     </svg>
                     <span>My list</span>
                   </button>
-                  <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                  <Link to={{pathname: `/films/:id/review`}} className="btn movie-card__button">Add review</Link>
                 </div>
               </div>
             </div>
@@ -132,11 +118,7 @@ class MoviePage extends PureComponent {
 
                 <div className="movie-card__text">
                   <p>{movieFullDescription}</p>
-
-                  {/* <p>Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&apos;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p> */}
-
                   <p className="movie-card__director"><strong>Director: {movieDirector}</strong></p>
-
                   <p className="movie-card__starring"><strong>Starring: {movieActors.join(`, `)} and other</strong></p>
                 </div>
               </div>
@@ -147,16 +129,9 @@ class MoviePage extends PureComponent {
         <div className="page-content">
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
-
-            <div className="catalog__movies-list">
-              {/* {similarFilms.map((elem) => (
-                <SmallMovieCard
-                  film = {elem}
-                  onMouseOver = {this.onCardHover(elem.movieId)}
-                  key = {elem.movieId}
-                />
-              ))} */}
-            </div>
+            <MoviesList
+              filmsList = {similarFilms}
+            />
           </section>
 
           <footer className="page-footer">
@@ -180,7 +155,8 @@ class MoviePage extends PureComponent {
 
 MoviePage.propTypes = {
   film: PropTypes.shape(FILM_SHAPE).isRequired,
-  films: PropTypes.array.isRequired
+  films: PropTypes.array.isRequired,
+  onPlayButtonClick: PropTypes.func.isRequired
 };
 
 export default MoviePage;

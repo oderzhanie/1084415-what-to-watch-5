@@ -1,34 +1,28 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import FILM_SHAPE from "../../utils/constants.js";
+import {FILM_SHAPE} from "../../utils/constants.js";
+import {Link} from "react-router-dom";
 
 class SmallMovieCard extends PureComponent {
   constructor(props) {
     super(props);
-
-    // this.state = {
-    //  стейт в этом компоненте не нужен?
-    // };
   }
 
   render() {
-    const {film, key, onMouseOver} = this.props;
+    const {film} = this.props; // onMouseOver добавить потом
     const {
       movieId,
       movieName,
       moviePreviewImg
     } = film;
-    const {id} = onMouseOver;
-
-    const actualClassName = id === movieId ? `small-movie-card small-movie-card:hover catalog__movies-card` : `small-movie-card catalog__movies-card`;
 
     return (
-      <article key={`${key}`} className={`${actualClassName}`}>
-        <div className="small-movie-card__image">
-          <img src={`img/${moviePreviewImg}`} alt={`${movieName}`} width="280" height="175" />
+      <article key={movieId} id={movieId} className="small-movie-card catalog__movies-card">
+        <div className="small-movie-card__image" >
+          <img src={`img/${moviePreviewImg}`} alt={movieName} width="280" height="175" />
         </div>
         <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href="movie-page.html">{movieName}</a>
+          <Link to={{pathname: `/films/:id`}} className="small-movie-card__link">{movieName}</Link>
         </h3>
       </article>
     );
@@ -37,8 +31,7 @@ class SmallMovieCard extends PureComponent {
 
 SmallMovieCard.propTypes = {
   film: PropTypes.shape(FILM_SHAPE).isRequired,
-  key: PropTypes.string.isRequired,
-  onMouseOver: PropTypes.func
+  // onMouseOver: PropTypes.func
 };
 
 export default SmallMovieCard;

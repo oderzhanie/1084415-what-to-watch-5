@@ -20,9 +20,9 @@ const generateDate = () => {
   return releaseDate;
 };
 
-export const generateFilm = () => {
+const generateFilm = () => {
   const filmTitle = getRandomElem(TITLES);
-  const description = TEXT;
+  // const description = TEXT;
   const filmPoster = `../../img/${getRandomElem(POSTERS)}`;
   const filmDate = generateDate();
   filmDate.setDate(getRandomInteger(START_DATE, END_DATE));

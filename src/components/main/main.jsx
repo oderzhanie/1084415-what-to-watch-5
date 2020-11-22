@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import MoviesList from "../movies-list";
+import MoviesList from "../movies-list/movies-list";
 
 class Main extends PureComponent {
   constructor(props) {
@@ -8,7 +8,8 @@ class Main extends PureComponent {
   }
 
   render() {
-    const {films} = this.props;
+    const {films, onPlayButtonClick} = this.props;
+    const mainFilms = films.slice(0, 8);
 
     return (
       <React.Fragment>
@@ -45,11 +46,15 @@ class Main extends PureComponent {
                 <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
                 <p className="movie-card__meta">
                   <span className="movie-card__genre">Drama</span>
-                  <span className="movie-card__year">2014</span>
+                  <span className="movie-card__year">2016</span>
                 </p>
 
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button">
+                  <button onClick={(evt) => {
+                    evt.preventDefault();
+                    onPlayButtonClick();
+                  }}
+                  className="btn btn--play movie-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -104,9 +109,9 @@ class Main extends PureComponent {
               </li>
             </ul>
 
-            <div className="catalog__movies-list">
-              {<MoviesList films={films}/>}
-            </div>
+            {<MoviesList
+              filmsList = {mainFilms}
+            />}
 
             <div className="catalog__more">
               <button className="catalog__button" type="button">Show more</button>
@@ -134,6 +139,7 @@ class Main extends PureComponent {
 
 Main.propTypes = {
   films: PropTypes.array.isRequired,
+  onPlayButtonClick: PropTypes.func.isRequired
 };
 
 export default Main;

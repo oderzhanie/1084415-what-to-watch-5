@@ -1,13 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 class Player extends PureComponent {
   constructor(props) {
     super(props);
-
-    // this.state = {
-
-    // }
   }
 
   render() {
@@ -17,11 +14,29 @@ class Player extends PureComponent {
       movieName,
       moviePosterImg,
       movieVideoLink,
+      movieRuntime
     } = film;
+
+    const getRunTime = (runtime) => {
+      const runtimeHours = Math.trunc(moment.duration(runtime, `m`).asHours()); // Переделать потом на пересчет из секунд
+      const runtimeMinutes = moment.duration(runtime % 60, `m`).asMinutes();
+
+      if (runtimeHours === 0) {
+        return (
+          `00:${runtimeMinutes}:00`
+        );
+      } else {
+        return (
+          `${runtimeHours}:${runtimeMinutes}:00`
+        );
+      }
+    };
+
+    const runtime = getRunTime(movieRuntime);
 
     return (
       <div className="player">
-        <video src={`${movieVideoLink}`} className="player__video" poster={`img/${moviePosterImg}`}></video>
+        <video src={movieVideoLink} className="player__video" poster={`img/${moviePosterImg}`}></video>
 
         <button type="button" className="player__exit">Exit</button>
 
@@ -29,9 +44,9 @@ class Player extends PureComponent {
           <div className="player__controls-row">
             <div className="player__time">
               <progress className="player__progress" value="30" max="100"></progress>
-              <div className="player__toggler" style="left: 30%;">Toggler</div>
+              <div className="player__toggler" style={{left: 30 + `%`}}>Toggler</div>
             </div>
-            <div className="player__time-value">1:30:29</div>
+            <div className="player__time-value">{runtime}</div>
           </div>
 
           <div className="player__controls-row">
@@ -62,6 +77,7 @@ Player.propTypes = {
     movieName: PropTypes.string.isRequired,
     moviePosterImg: PropTypes.string.isRequired,
     movieVideoLink: PropTypes.string.isRequired,
+    movieRuntime: PropTypes.number.isRequired
   }).isRequired
 };
 
