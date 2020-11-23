@@ -22,11 +22,11 @@ class AddReviewPage extends PureComponent {
 
   handleFieldChange(evt) {
     const {name, value} = evt.target;
-    if (name === `rating`) {
-      const prevRating = document.querySelector(`.rating__input[checked]`);
-      prevRating.removeAttribute(`checked`);
-      evt.target.setAttribute(`checked`, ``);
-    }
+    // if (name === `rating`) {
+    //   const prevRating = document.querySelector(`.rating__input[checked]`);
+    //   prevRating.removeAttribute(`checked`);
+    //   evt.target.setAttribute(`checked`, ``);
+    // }
     this.setState({[name]: value});
     // Вывод результата запаздывает в реакции на один шаг (показывает итог предыдущего шага)
     // То есть стейт обновляется, а рендерятся измененения только при следующем onChange
@@ -38,43 +38,34 @@ class AddReviewPage extends PureComponent {
     //   movieId,
     // } = film;
 
+
     return (
       <div className="add-review">
         <form onSubmit={this.handleSubmit} action="#" className="add-review__form">
           <div className="rating">
             <div className="rating__stars">
               <input
-                onChange={(evt) => {
-                  this.handleFieldChange(evt);
-                }}
+                onChange={this.handleFieldChange}
                 className="rating__input" id="star-1" type="radio" name="rating" value="1"/>
               <label className="rating__label" htmlFor="star-1">Rating 1</label>
 
               <input
-                onChange={(evt) => {
-                  this.handleFieldChange(evt);
-                }}
+                onChange={this.handleFieldChange}
                 className="rating__input" id="star-2" type="radio" name="rating" value="2" />
               <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
               <input
-                onChange={(evt) => {
-                  this.handleFieldChange(evt);
-                }}
-                className="rating__input" id="star-3" type="radio" name="rating" value="3" checked/>
+                onChange={this.handleFieldChange}
+                className="rating__input" id="star-3" type="radio" name="rating" value="3" defaultChecked/>
               <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
               <input
-                onChange={(evt) => {
-                  this.handleFieldChange(evt);
-                }}
+                onChange={this.handleFieldChange}
                 className="rating__input" id="star-4" type="radio" name="rating" value="4" />
               <label className="rating__label" htmlFor="star-4">Rating 4</label>
 
               <input
-                onChange={(evt) => {
-                  this.handleFieldChange(evt);
-                }}
+                onChange={this.handleFieldChange}
                 className="rating__input" id="star-5" type="radio" name="rating" value="5" />
               <label className="rating__label" htmlFor="star-5">Rating 5</label>
             </div>
@@ -82,9 +73,7 @@ class AddReviewPage extends PureComponent {
 
           <div className="add-review__text">
             <textarea
-              onChange={(evt) => {
-                this.handleFieldChange(evt);
-              }}
+              onChange={this.handleFieldChange}
               className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit">Post</button>
