@@ -1,11 +1,42 @@
-import React from "react";
-// import PropTypes from "prop-types";
+import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
 
-const Player = () => {
-  return (
-    <React.Fragment>
+class Player extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {film} = this.props;
+    const {
+      // movieId,
+      movieName,
+      moviePosterImg,
+      movieVideoLink,
+      movieRuntime
+    } = film;
+
+    const getRunTime = (runtime) => {
+      const runtimeHours = Math.trunc(moment.duration(runtime, `m`).asHours()); // Переделать потом на пересчет из секунд
+      const runtimeMinutes = moment.duration(runtime % 60, `m`).asMinutes();
+
+      if (runtimeHours === 0) {
+        return (
+          `00:${runtimeMinutes}:00`
+        );
+      } else {
+        return (
+          `${runtimeHours}:${runtimeMinutes}:00`
+        );
+      }
+    };
+
+    const runtime = getRunTime(movieRuntime);
+
+    return (
       <div className="player">
-        <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+        <video src={movieVideoLink} className="player__video" poster={`img/${moviePosterImg}`}></video>
 
         <button type="button" className="player__exit">Exit</button>
 
@@ -13,9 +44,9 @@ const Player = () => {
           <div className="player__controls-row">
             <div className="player__time">
               <progress className="player__progress" value="30" max="100"></progress>
-              <div className="player__toggler" style="left: 30%;">Toggler</div>
+              <div className="player__toggler" style={{left: 30 + `%`}}>Toggler</div>
             </div>
-            <div className="player__time-value">1:30:29</div>
+            <div className="player__time-value">{runtime}</div>
           </div>
 
           <div className="player__controls-row">
@@ -25,7 +56,7 @@ const Player = () => {
               </svg>
               <span>Play</span>
             </button>
-            <div className="player__name">Transpotting</div>
+            <div className="player__name">{movieName}</div>
 
             <button type="button" className="player__full-screen">
               <svg viewBox="0 0 27 27" width="27" height="27">
@@ -36,8 +67,18 @@ const Player = () => {
           </div>
         </div>
       </div>
-    </React.Fragment>
-  );
+    );
+  }
+}
+
+Player.propTypes = {
+  film: PropTypes.shape({
+    // movieId: PropTypes.string.isRequired,
+    movieName: PropTypes.string.isRequired,
+    moviePosterImg: PropTypes.string.isRequired,
+    movieVideoLink: PropTypes.string.isRequired,
+    movieRuntime: PropTypes.number.isRequired
+  }).isRequired
 };
 
 export default Player;

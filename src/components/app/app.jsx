@@ -9,32 +9,54 @@ import Player from "../player/player";
 import SignIn from "../sign-in/sign-in";
 
 const App = (props) => {
-  const {movieName, movieGenre, movieReleaseDate} = props;
+  const {films} = props;
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <Main
-            movieName={movieName}
-            movieGenre={movieGenre}
-            movieReleaseDate={movieReleaseDate}
-          />
+        <Route exact
+          path="/"
+          render={({history}) => (
+            <Main
+              films={films}
+              onPlayButtonClick={() => history.push(`/player/:id`)}
+            />
+          )}>
         </Route>
+
         <Route exact path="/login">
           <SignIn />
         </Route>
+
         <Route exact path="/mylist">
-          <MyList />
+          <MyList
+            films={films}
+          />
         </Route>
+
         <Route exact path="/films/:id/review">
-          <AddReview />
+          <AddReview
+            film={films[5]}
+          />
         </Route>
-        <Route exact path="/films/:id">
-          <MoviePage />
+
+        <Route exact
+          path="/films/:id"
+          render={({history}) => (
+            <MoviePage
+              film={films[1]}
+              films={films}
+              onPlayButtonClick={() => history.push(`/player/:id`)}
+            />
+          )}
+        >
+
         </Route>
+
         <Route exact path="/player/:id">
-          <Player />
+          <Player
+            film={films[3]}
+          />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -42,9 +64,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  movieName: PropTypes.string.isRequired,
-  movieGenre: PropTypes.string.isRequired,
-  movieReleaseDate: PropTypes.number.isRequired,
+  films: PropTypes.array.isRequired,
 };
 
 export default App;
