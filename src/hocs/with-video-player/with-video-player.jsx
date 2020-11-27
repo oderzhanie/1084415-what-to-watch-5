@@ -18,12 +18,18 @@ const withVideoPlayer = (Component) => {
         {...this.props}
         renderPlayer={(src, img) => (
           <VideoPlayer
-            src={src}
-            img={img}
+            moviePreviewLink={src}
+            moviePreviewImg={img}
             isPlaying={isCardActive}
             onMouseOver={() => this.setState({
-              isCardActive: true
-            })} />
+              isCardActive: true,
+            })
+            }
+            onMouseOut={() => this.setState({
+              isCardActive: false,
+            })
+            }
+          />
         )}
       />;
     }

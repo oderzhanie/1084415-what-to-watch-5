@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment, createRef} from "react";
+import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 
 export default class VideoPlayer extends PureComponent {
@@ -20,42 +20,42 @@ export default class VideoPlayer extends PureComponent {
     video.oncanplaythrough = null;
   }
 
-  render() {
-    const {movieId, moviePreviewImg, moviePreviewLink, isPlaying, onMouseOver} = this.props;
-
-    return (
-      <Fragment>
-        <video
-          src = {moviePreviewLink}
-          autoPlay={isPlaying}
-          ref={this.videoRef}
-          id = {movieId}
-          poster={moviePreviewImg}
-          width="280"
-          height="175"
-          muted
-          onMouseOver={onMouseOver}
-        >
-        </video>
-      </Fragment>
-    );
-  }
-
   componentDidUpdate() {
     const video = this.videoRef.current;
+    const {moviePreviewLink} = this.props;
 
     if (this.props.isPlaying) {
-      video.play();
+      video.src = moviePreviewLink;
+      setTimeout(() => video.play(), 1000);
     } else {
       video.pause();
+      video.src = ``;
     }
+  }
+
+  render() {
+    const {moviePreviewImg, moviePreviewLink, onMouseOver, onMouseOut} = this.props;
+
+    return (
+      <video
+        src = {moviePreviewLink}
+        ref={this.videoRef}
+        poster={moviePreviewImg}
+        width="280"
+        height="175"
+        muted
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
+      >
+      </video>
+    );
   }
 }
 
 VideoPlayer.propTypes = {
   moviePreviewLink: PropTypes.string.isRequired,
   moviePreviewImg: PropTypes.string.isRequired,
-  movieId: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  onMouseOver: PropTypes.func
+  onMouseOver: PropTypes.func,
+  onMouseOut: PropTypes.func
 };

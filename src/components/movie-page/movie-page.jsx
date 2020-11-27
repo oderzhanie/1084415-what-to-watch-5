@@ -4,10 +4,32 @@ import {FILM_SHAPE, FILMS_LIST_LENGTH} from "../../utils/constants.js";
 import {getRandomInteger} from "../../utils/utils.js";
 import MoviesList from "../movies-list/movies-list";
 import {Link} from "react-router-dom";
+import {TABS} from "../../utils/constants.js";
+import Tabs from "../tabs/tabs";
 
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = {
+      activeTab: TABS.OVERVIEW
+    };
+
+    this.handleTabClick = this.handleTabClick.bind(this);
+  }
+
+  handleTabClick(evt) {
+    evt.preventDefault();
+
+    this.setState({
+      activeTab: evt.target.textContent
+    });
+
+    const prevTab = document.querySelector(`.movie-nav__item--active`);
+    prevTab.classList.remove(`movie-nav__item--active`);
+
+    const newTab = evt.target.parentNode;
+    newTab.classList.add(`movie-nav__item--active`);
   }
 
   render() {
@@ -15,19 +37,12 @@ class MoviePage extends PureComponent {
     const similarFilmsNumber = getRandomInteger(1, FILMS_LIST_LENGTH);
     const similarFilms = films.slice(0, similarFilmsNumber);
 
+
     const {
       movieName,
       moviePosterImg,
-      movieRating,
-      movieRatingVerbal,
-      movieScoresCount,
       movieGenre,
-      // movieReviews,
-      movieDirector,
-      movieActors,
-      movieReleaseDate,
-      movieFullDescription,
-      // isMyList
+      movieReleaseDate
     } = film;
 
     return (
@@ -97,30 +112,24 @@ class MoviePage extends PureComponent {
                 <nav className="movie-nav movie-card__nav">
                   <ul className="movie-nav__list">
                     <li className="movie-nav__item movie-nav__item--active">
-                      <a href="#" className="movie-nav__link">Overview</a>
+                      <a onClick={this.handleTabClick}
+                        href="#" className="movie-nav__link">Overview</a>
                     </li>
                     <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">Details</a>
+                      <a onClick={this.handleTabClick}
+                        href="#" className="movie-nav__link">Details</a>
                     </li>
                     <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">Reviews</a>
+                      <a onClick={this.handleTabClick}
+                        href="#" className="movie-nav__link">Reviews</a>
                     </li>
                   </ul>
                 </nav>
 
-                <div className="movie-rating">
-                  <div className="movie-rating__score">{movieRating}</div>
-                  <p className="movie-rating__meta">
-                    <span className="movie-rating__level">{movieRatingVerbal}</span>
-                    <span className="movie-rating__count">{movieScoresCount} ratings</span>
-                  </p>
-                </div>
-
-                <div className="movie-card__text">
-                  <p>{movieFullDescription}</p>
-                  <p className="movie-card__director"><strong>Director: {movieDirector}</strong></p>
-                  <p className="movie-card__starring"><strong>Starring: {movieActors.join(`, `)} and other</strong></p>
-                </div>
+                <Tabs
+                  film={film}
+                  activeTab={this.state.activeTab}
+                />
               </div>
             </div>
           </div>

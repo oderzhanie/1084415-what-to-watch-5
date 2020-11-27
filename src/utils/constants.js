@@ -23,3 +23,9 @@ export const FILM_SHAPE = {
   moviePreviewLink: PropTypes.string.isRequired,
   isMyList: PropTypes.bool.isRequired
 };
+
+export const TABS = {
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`
+};

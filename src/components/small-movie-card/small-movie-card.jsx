@@ -14,14 +14,9 @@ const SmallMovieCard = (props) => {
 
   return (
     <article
-      key={movieId}
       id={movieId}
       className="small-movie-card catalog__movies-card">
       {renderPlayer(moviePreviewLink, moviePreviewImg)}
-      {/* <div
-      className="small-movie-card__image" >
-        {renderPlayer(moviePreviewLink, moviePreviewImg)}
-      </div> */}
       <h3 className="small-movie-card__title">
         <Link to={{pathname: `/films/:id`}} className="small-movie-card__link">{movieName}</Link>
       </h3>
