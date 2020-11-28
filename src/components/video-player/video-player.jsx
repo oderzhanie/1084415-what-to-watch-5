@@ -26,10 +26,12 @@ export default class VideoPlayer extends PureComponent {
 
     if (this.props.isPlaying) {
       video.src = moviePreviewLink;
-      setTimeout(() => video.play(), 1000);
+      this.timerId = setTimeout(() => video.play(), 1000);
+
     } else {
       video.pause();
       video.src = ``;
+      clearTimeout(this.timerId);
     }
   }
 

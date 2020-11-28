@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, createRef} from 'react';
 import VideoPlayer from "../../components/video-player/video-player";
 
 const withVideoPlayer = (Component) => {
@@ -7,7 +7,7 @@ const withVideoPlayer = (Component) => {
       super(props);
 
       this.state = {
-        isCardActive: false,
+        isCardActive: false
       };
     }
 
@@ -22,11 +22,11 @@ const withVideoPlayer = (Component) => {
             moviePreviewImg={img}
             isPlaying={isCardActive}
             onMouseOver={() => this.setState({
-              isCardActive: true,
+              isCardActive: true
             })
             }
             onMouseOut={() => this.setState({
-              isCardActive: false,
+              isCardActive: false
             })
             }
           />

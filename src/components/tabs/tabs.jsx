@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {FILM_SHAPE} from "../../utils/constants.js";
 import {TABS} from "../../utils/constants.js";
@@ -10,8 +10,6 @@ const Tabs = (props) => {
   const {film, activeTab} = props;
 
   const {
-    movieName,
-    moviePosterImg,
     movieRating,
     movieRatingVerbal,
     movieScoresCount,
@@ -171,8 +169,8 @@ const Tabs = (props) => {
   }
 };
 
-// Tabs.propTypes = {
-//   film: PropTypes.shape(FILM_SHAPE).isRequired,
-// };
+Tabs.propTypes = {
+  film: PropTypes.shape(FILM_SHAPE).isRequired,
+};
 
 export default Tabs;

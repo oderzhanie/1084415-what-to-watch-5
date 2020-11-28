@@ -15,9 +15,9 @@ class MoviesList extends PureComponent {
 
     return (
       <div className="catalog__movies-list">
-        {filmsList.map((film, i) => (
+        {filmsList.map((film) => (
           <SmallMovieCardWrapped
-            film = {filmsList[i]}
+            film = {film}
             key = {film.movieId}
           />
         ))}
