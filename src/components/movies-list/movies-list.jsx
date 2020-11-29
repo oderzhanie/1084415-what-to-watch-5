@@ -1,20 +1,13 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card";
+import withVideoPlayer from "../../hocs/with-video-player/with-video-player";
+
+const SmallMovieCardWrapped = withVideoPlayer(SmallMovieCard);
 
 class MoviesList extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      activeCardId: ``
-    };
-
-    this.handleCardHover = this.handleCardHover.bind(this);
-  }
-
-  handleCardHover() {
-    // Должен потом менять стейт
   }
 
   render() {
@@ -22,11 +15,10 @@ class MoviesList extends PureComponent {
 
     return (
       <div className="catalog__movies-list">
-        {filmsList.map((film, i) => (
-          <SmallMovieCard
-            film = {filmsList[i]}
+        {filmsList.map((film) => (
+          <SmallMovieCardWrapped
+            film = {film}
             key = {film.movieId}
-            onMouseOver = {this.handleCardHover}
           />
         ))}
       </div>

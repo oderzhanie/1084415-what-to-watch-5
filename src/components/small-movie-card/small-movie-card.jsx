@@ -1,37 +1,32 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {FILM_SHAPE} from "../../utils/constants.js";
 import {Link} from "react-router-dom";
 
-class SmallMovieCard extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
+const SmallMovieCard = (props) => {
+  const {film, renderPlayer} = props;
+  const {
+    movieId,
+    movieName,
+    moviePreviewImg,
+    moviePreviewLink
+  } = film;
 
-  render() {
-    const {film} = this.props; // onMouseOver добавить потом
-    const {
-      movieId,
-      movieName,
-      moviePreviewImg
-    } = film;
-
-    return (
-      <article key={movieId} id={movieId} className="small-movie-card catalog__movies-card">
-        <div className="small-movie-card__image" >
-          <img src={`img/${moviePreviewImg}`} alt={movieName} width="280" height="175" />
-        </div>
-        <h3 className="small-movie-card__title">
-          <Link to={{pathname: `/films/:id`}} className="small-movie-card__link">{movieName}</Link>
-        </h3>
-      </article>
-    );
-  }
-}
+  return (
+    <article
+      id={movieId}
+      className="small-movie-card catalog__movies-card">
+      {renderPlayer(moviePreviewLink, moviePreviewImg)}
+      <h3 className="small-movie-card__title">
+        <Link to={{pathname: `/films/:id`}} className="small-movie-card__link">{movieName}</Link>
+      </h3>
+    </article>
+  );
+};
 
 SmallMovieCard.propTypes = {
   film: PropTypes.shape(FILM_SHAPE).isRequired,
-  // onMouseOver: PropTypes.func
+  renderPlayer: PropTypes.func.isRequired
 };
 
 export default SmallMovieCard;

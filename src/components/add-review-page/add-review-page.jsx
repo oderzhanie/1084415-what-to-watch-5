@@ -22,14 +22,7 @@ class AddReviewPage extends PureComponent {
 
   handleFieldChange(evt) {
     const {name, value} = evt.target;
-    // if (name === `rating`) {
-    //   const prevRating = document.querySelector(`.rating__input[checked]`);
-    //   prevRating.removeAttribute(`checked`);
-    //   evt.target.setAttribute(`checked`, ``);
-    // }
     this.setState({[name]: value});
-    // Вывод результата запаздывает в реакции на один шаг (показывает итог предыдущего шага)
-    // То есть стейт обновляется, а рендерятся измененения только при следующем onChange
   }
 
   render() {
