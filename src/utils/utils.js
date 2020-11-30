@@ -49,3 +49,7 @@ export const getRandomDescription = (description) => {
   return randomDescription;
 };
 
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};
+
