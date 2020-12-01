@@ -8,15 +8,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    // case ActionType.CHANGE_FILTER:
-      // return extend(state, {
-      //   step: state.step + action.payload,
-      // });
+    case ActionType.CHANGE_FILTER:
+      return extend(state, action.payload);
 
-    // case ActionType.FILTER_FILMS:
-    //   return extend(state, {
-    //     mistakes: state.mistakes + action.payload,
-    //   });
+    case ActionType.FILTER_FILMS:
+      return extend(state, action.payload);
   }
 
   return state;
